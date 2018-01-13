@@ -3,22 +3,67 @@ package com.example.nestor.kotlin_intro
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import com.example.nestor.kotlin_intro.Fragments.FragmentOne
+import com.example.nestor.kotlin_intro.Fragments.FragmentTwo
 import com.example.nestor.kotlin_intro.KotlinIntro.*
 import com.example.nestor.kotlin_intro.NetworkLayerExample.NetworkExample
 
 
 class MainActivity : AppCompatActivity() {
 
+    var isFragmentOneLoaded = true
+    var manager = supportFragmentManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        runEnumExample()
+
+        //Get Change button
+        val btnChangeFragment = findViewById<Button>(R.id.btn_change)
+        ShowFragmentOne()
+        btnChangeFragment.setOnClickListener({
+
+            if(isFragmentOneLoaded == true) {
+                ShowFragmentTwo()
+            } else {
+                ShowFragmentOne()
+            }
+        })
 
         //runLambdaExample()
         //runExceptionExamples()
         //runInterfaceExample()
-        runNetworkExample()
+        //runNetworkExample()
     }
+
+    fun runEnumExample(){
+        EnumExample.runExample()
+    }
+
+
+    //region Change Fragment Examples
+    fun ShowFragmentOne(){
+        val transaction = manager.beginTransaction()
+        val fragment = FragmentOne()
+        transaction.replace(R.id.frame_container,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+        isFragmentOneLoaded = true
+
+    }
+    fun ShowFragmentTwo(){
+        val transaction = manager.beginTransaction()
+        val fragment = FragmentTwo()
+        transaction.replace(R.id.frame_container,fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+        isFragmentOneLoaded = false
+
+    }
+    //endregion
 
     //region Interface example
     fun runInterfaceExample(){
