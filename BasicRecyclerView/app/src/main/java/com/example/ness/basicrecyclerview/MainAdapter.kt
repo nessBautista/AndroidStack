@@ -1,5 +1,6 @@
 package com.example.ness.basicrecyclerview
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -38,4 +39,11 @@ class MainAdapter(val homeFeed: HomeFeed):RecyclerView.Adapter<CustomViewHolder>
 
 class CustomViewHolder(v: View):RecyclerView.ViewHolder(v){
 
+    init {
+        v.setOnClickListener { println("Test")
+            val intent = Intent(v.context, CourseDetailActivity::class.java)
+            v.context.startActivity(intent)
+        }
+
+    }
 }
